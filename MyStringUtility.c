@@ -85,7 +85,7 @@ unsigned int find_replace(char StrIn[], char ToFind[], char ToReplaceWith[], uns
 		}
 		else if(FinalLength >= max)//array overflow error handler
 		{
-			printf("\Final array too long, killing program");
+			printf("\nFinal array too long, killing program");
 			exit(EXIT_FAILURE);
 		}
 
