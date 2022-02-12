@@ -13,7 +13,9 @@
 #include <stdint.h> //déclare des types standards d'entier
 #include <stdbool.h> //gère le type booléen
 #include <math.h> //déclare les fonctions mathématiques usuelles
+#include <string.h>
 #include "MyStringUtility.h"
+
 
 
 #define _CRT_SECURE_NO_WARNINGS
@@ -24,14 +26,68 @@ int main(void) //fonction principale. Tout programme fait appel à cette fonctio
 {
 	//Init local variables
 	char Input[100] = "Salut, je m'appelle Erwann. Salut ceci est le premier test. Salut ceci est un test2.";
-	unsigned int N = 0;
+	char cat[] = "phrase de test ";
+	long N = 0;
+	char* Str = NULL;
+	long currentAllocation;
+	FILE* myFile = NULL;
 
-	printf("%s\n", Input);
+	
 
-	N = find_replace(Input, "Salut ", "Hello_", 100);
+	myFile = fopen("example.txt", "r+");
 
-	printf("%s\n%d\n", Input, N);
+	fseek(myFile, 0, SEEK_END); // seek to end of file
+	currentAllocation = ftell(myFile); // get current file pointer
+	fseek(myFile, 0, SEEK_SET); // seek back to beginning of file
 
+	Str = (char*)calloc(currentAllocation, sizeof(char));
+
+	fget_string(myFile, Str, EOF);	//get the whole file content
+	fclose(myFile);
+
+	printf("%s\n\n", Str);
+	Str = dfind_replace(Str, " il ", " REPLACEMENT ", &currentAllocation, &N);
+
+	myFile = fopen("example.txt", "w");
+	fwrite(Str, 1, currentAllocation, myFile);
+	fclose(myFile);
+
+	printf("\nN = %ld\n", N);
+
+	free(Str);
+
+	
+
+
+	//================================
+
+	/*printf("Input : \n%s\n", Input);
+	currentAllocation = strlen(Input) + 1;
+	Str = (char*)calloc(currentAllocation, sizeof(char));
+	strcpy(Str, Input);
+	printf("Str : \n%s\n", Str);
+	Str = dfind_replace(Str, "Salut", "Avec mes plus plates et Mes meilleures salutations", &currentAllocation, &N);
+
+	printf("%s\n", Str);
+
+	printf("N = %ld\n", N);
+
+	free(Str);*/
+	
+	//================================
+
+	/*Str = (char*)calloc(strlen(Input) + 1, sizeof(char));
+	strcpy(Str, Input);
+	printf("%s\n", Str);
+	for (unsigned int i = 0; i <= 5; i++)
+	{
+		Str = (char*)realloc(Str, strlen(Str) + strlen(cat) + 2);
+		strcpy(Str + strlen(Str), cat);
+		printf("%s\n", Str);
+	}
+
+	free(Str);*/
+	//================================
 	
 	//system("PAUSE"); //ligne à rajouter pour ceux qui utilisent VS
     return EXIT_SUCCESS;
