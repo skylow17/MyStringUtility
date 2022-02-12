@@ -15,4 +15,6 @@ Find the all strings _ToFind[]_ into string _StrIn[]_ and replaces it with _ToRe
 The _max_ parameter limits the _StrIn[]_ string expansion as the function doesn't handle dynamic memory allocation.
 > example : The StrIn[] has been declared as 100 units array and the string is actually 90 char's long. If the string that replaces the previous ones is bigger then an array overflow could occur. _max_ parameter check that the final string won't be longer than its own limit.
 
-## Todo : same as the previous one but with dynamic memory allocation/reallocation
+## `char* dfind_replace(char StrIn[], char ToFind[], char ToReplaceWith[], long* currentAllocation, long* NumberOfOccurences)`
+Same as `find_replace(...)` but handle dynamic memory realloction in case of memory overflow.
+return value has to be the new pointer to the string as dynamic memory reallocation can move the pointer to the string to another memory location in case of data overflow.
